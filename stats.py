@@ -6,9 +6,9 @@ def number_of_words(book):
     return word_count
 
 def words_dictionary(content):
-    characters = []
     dictionary = {}
-    report_list = []
+    
+    # Get character count
     for character in content:
         lower_case = character.lower()
         if lower_case == "\ufeff":
@@ -17,15 +17,30 @@ def words_dictionary(content):
             dictionary[lower_case] = 1
         else:
             dictionary[lower_case] += 1
-    for key in dictionary:
-        report_list.append(f"{key}: {dictionary[key]}")
-        report_list.sort(reverse=True, sorted=True)
-    print(report_list)
-
-        
-        
+    
     return dictionary
 
-        
+def format_word_count(dictionary):
+    report_list = []
+    small_dictionary = {}
 
+    # create the list with dictionary values
+    for item in dictionary:
+        small_dictionary = {item : dictionary[item]}
+        report_list.append(small_dictionary)
+    
+    # helps to get the value for the key for sorting
+    def get_value(value):
+        return list(value.values())[0]
+
+    # sorts the list based on the values for each key
+    report_list.sort(reverse=True, key=get_value) 
+
+    # removes symbols
+    for item2 in range(0, len(report_list)):
+        for key2 in report_list[item2]:
+            if key2.isalpha() == True:
+                print(f"{key2}: {report_list[item2][key2]}")
+            else:
+                continue
 
